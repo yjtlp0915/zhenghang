@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <title>网站信息</title>
+  <link rel="stylesheet" href="../staticAdmin/css/pintuer.css">
+  <link rel="stylesheet" href="../staticAdmin/css/admin.css">
+  <script src="../staticAdmin/js/jquery.js"></script>
+  <script src="../staticAdmin/js/pintuer.js"></script>
+</head>
+<body>
+<!-- 先引入公用的头部和导航栏 -->
+<% include public/header.ejs %>
+<% include public/nav.ejs %>
+<!-- 引入首页导航 -->
+<ul class="bread">
+  <li><a href="/admin" class="icon-home"> 首页</a></li>
+  <li><a id="a_leader_txt">网站信息</a></li>
+</ul>
+<!--  所有内容必须用<div class="admin"><div>包起来 -->
+<div class="admin">
+  <div class="panel admin-panel">
+    <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 网站信息</strong></div>
+    <div class="body-content">
+    <!--  这里的action=""需改为action="/admin/system"，这样可通过post把数据提交到后台数据库的system表格里 -->
+      <form method="post" class="form-x" action="/admin/system">
+        <div class="form-group">
+          <div class="label">
+            <label>网站标题：</label>
+          </div>
+          <div class="field">
+            <input type="text" class="input" name="title" value="<%= data[0].title %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label">
+            <label>网站关键字：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].keywords %>来获取数据库数据 -->
+            <textarea class="input" name="keywords" style="height:80px"><%= data[0].keywords %></textarea>
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>网站描述：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].description %>来获取数据库数据 -->
+            <textarea class="input" name="description"><%= data[0].description %></textarea>
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>联系人：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].s_name %>来获取数据库数据 -->
+            <input type="text" class="input" name="s_name" value="<%= data[0].s_name %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>手机：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].moble %>来获取数据库数据 -->
+            <input type="text" class="input" name="moble" value="<%= data[0].moble %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>电话：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].tel %>来获取数据库数据 -->
+            <input type="text" class="input" name="tel" value="<%= data[0].tel %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>传真：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].fax %>来获取数据库数据 -->
+            <input type="text" class="input" name="fax" value="<%= data[0].fax %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>QQ：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].qq %>来获取数据库数据 -->
+            <input type="text" class="input" name="qq" value="<%= data[0].qq %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>Email：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].email %>来获取数据库数据 -->
+            <input type="text" class="input" name="email" value="<%= data[0].email %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>地址：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].address %>来获取数据库数据 -->
+            <input type="text" class="input" name="address" value="<%= data[0].address %>" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label>底部信息：</label>
+          </div>
+          <div class="field">
+            <!-- 这里加上<%= data[0].info %>来获取数据库数据 -->
+            <textarea name="info" class="input" style="height:120px;"><%= data[0].info %></textarea>
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label">
+            <label></label>
+          </div>
+          <div class="field">
+            <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

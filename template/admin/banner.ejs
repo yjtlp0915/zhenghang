@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <title>图片轮播</title>
+  <link rel="stylesheet" href="../staticAdmin/css/pintuer.css">
+  <link rel="stylesheet" href="../staticAdmin/css/admin.css">
+  <script src="../staticAdmin/js/jquery.js"></script>
+  <script src="../staticAdmin/js/pintuer.js"></script>
+</head>
+<body>
+<!-- 先引入公用的头部和导航栏 -->
+<% include public/header.ejs %>
+<% include public/nav.ejs %>
+<ul class="bread">
+  <li><a href="/admin" class="icon-home">首页</a></li>
+  <li><a href="/admin" class="icon-home">轮播管理</a></li>
+</ul>
+<!--  所有内容必须用<div class="admin"><div>包起来 -->
+<div class="admin">
+<div class="panel admin-panel">
+  <div class="panel-head"><strong class="icon-reorder">内容列表</strong></div>
+  <div class="padding border-bottom">
+  <button type="button" class="button border-yellow" onclick="window.location.href='#add'"><span class="icon-plus-square-o"></span>添加内容</button>
+  </div>
+  <table class="table table-hover text-center">
+    <tr>
+      <th width="10%">ID</th>
+      <th width="20%">图片</th>
+      <th width="15%">名称</th>
+      <th width="20%">描述</th>
+      <th width="10%">排序</th>
+      <th width="15%">操作</th>
+    </tr>
+    <!-- 这里要用for循环，因为轮播的图片数量不定 -->
+    <% for(var i=0;i<data.length;i++){ %>
+    <tr>
+      <td><%=data[i].id %></td>
+      <td><img src="<%= data[i].img_src %>" alt="" width="120" height="50" /></td>
+      <td><%= data[i].title %></td>
+      <td><%= data[i].description %></td>
+      <td><%= data[i].sort %></td>
+      <td>
+        <div class="button-group">
+          <a class="button border-main" href="#add">
+            <span class="icon-edit"></span>
+            修改
+          </a>
+          <a class="button border-red" href="javascript:void(0)" onclick="return del(<%=data[i].id %>)">
+            <span class="icon-trash-o"></span>
+            删除
+          </a>
+        </div>
+      </td>
+    </tr>
+    <%}%>
+  </table>
+</div>
+
+<!-- 删除代码段 -->
+<script type="text/javascript">
+  function del(id){
+    if(confirm("您确定要删除吗?")){
+      $.ajax({
+        url: '/admin/banner?id=' + id + '&act=del',
+        type: 'GET',
+        success:function(msg){
+          alert(msg.msg);
+          location.reload();
+        }
+      })
+    }
+  }
+</script>
+
+
+<div class="panel admin-panel margin-top" id="add">
+  <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 增加内容</strong></div>
+  <div class="body-content">
+    <form method="post" class="form-x" action="">
+      <div class="form-group">
+        <div class="label">
+          <label>标题：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input w50" value="" name="title" data-validate="required:请输入标题" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>URL：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input w50" name="url" value=""  />
+          <div class="tips"></div>
+        </div>
+      </div>
+
+
+      <!-- 图片上传代码段 -->
+      <div class="form-group">
+        <div class="label">
+          <label>图片：</label>
+        </div>
+        <div class="field">
+          <!-- 这里的name="img_src"，名字需和数据库表格里对应的一致 -->
+          <input type="text" id="url1" name="img_src" class="input tips" style="width:25%; float:left;"  value="" data-toggle="hover" data-place="right" data-image="" />
+
+          <!-- 这里需要改造加上input和leble这两条代码 -->
+          <input type="file" id="upload1" style="display:none;"/>
+          <!-- 这里的lebel作用是点击它可以获得上边隐藏的input焦点） -->
+          <label for="upload1" class="button bg-blue margin-left" style="float:left;">+ 浏览上传</label>
+
+          <div class="tipss">图片尺寸：1920*500</div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <div class="label">
+          <label>描述：</label>
+        </div>
+        <div class="field">
+          <textarea type="text" class="input" name="note" style="height:120px;" value=""></textarea>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>排序：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input w50" name="sort" value="0"  data-validate="required:,number:排序必须为数字" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label></label>
+        </div>
+        <div class="field">
+          <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<form action="" method="post" enctype="multipart/form-data"></form><!-- 需要加上这段代码 -->
+<!-- node+ajax上传 -->
+<script>
+  $(function(){
+    $("#upload1").on("change",function(){
+      var file = $("#upload1")[0].files;
+      var data = new FormData();
+      data.append("files",file[0]); //file[0]是一个对象，需要的是这个对象里的第0个数据，需要其他的可以用循环获取
+      $.ajax({
+        url: '/admin/upload',
+        type: 'post',
+        data: data,
+        dataType: 'JSON',
+        contentType: false, /*不可缺*/
+        processData: false, /*不可缺*/
+        success:function(msg){
+          //console.log(msg);
+          // if(msg.ok){ //如果上传成功，就接受图片路径
+          //   $("#url1").val(msg.fileUrl); //此处的url1是上边图片上传代码段里对应的id名，此处的fileUrl对应upload.js中改文件名后的新名字
+          // }
+          alert(msg.msg);
+          //用..替换www
+          var url_ = msg.fileUrl.replace(/\\/g, "\/");
+          var url = url_.replace("www","..");
+          $("#url1").val(url);
+          $("#url1").attr("data-image",url);
+        }
+      })
+    })
+  })
+</script>
+</body>
+</html>

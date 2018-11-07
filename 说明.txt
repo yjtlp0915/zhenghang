@@ -1,0 +1,3 @@
+先打开phpStudy——单击其他选项菜单——服务管理器——MySQL——启动
+打开navicat——打开数据库表格
+在文件输入打开cmd——输入node app.js——确定

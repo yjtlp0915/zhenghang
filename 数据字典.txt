@@ -1,0 +1,61 @@
+库
+  zhenghang
+表：
+  1、后台管理员表
+    admin_user
+      主键 id
+      用户名  username
+      密码  password
+  2、banner管理
+    banner
+      主键 id
+      图片路径  img_src
+      排序 sort
+  3、单页面管理
+    关于我们
+    企业理念
+    联系我们
+      page
+        主键  id
+        title 标题
+        内容 content
+  4、news_company 企业新闻
+    主键  id
+    标题  title
+    内容 content
+    发布时间 time
+    来源 souce
+
+  5、news_industry 行业新闻
+    主键  id
+    标题  title
+    内容 content
+    发布时间 time
+    来源 souce
+
+  6、网站留言  message
+    主键 id
+    姓名 name
+    性别  sex
+    兴趣  interest
+    联系  contact
+    QQ  qq
+    来自  from
+    邮箱  email
+    内容  content
+  7、系统设置
+    system
+    主键：id
+    网站名称：title
+    网站关键字：keywords
+    网站描述：description
+    企业地址：address
+    企业邮箱：email
+    联系电话：tel
+    企业传真：fox
+
+
+路由文件都放在router文件夹里的admin文件夹下
+ejs文件都放在template文件夹里的admin文件夹下
+上传的东西和样式、js等放在www文件夹里
+在bash中，飘符号用法同$()一样，用``括起来的内容代表一个变量
